@@ -7,3 +7,6 @@ The food is now separated from the game.cpp, I add a new class Food. Now the foo
  - a poison (displayed in green) that will decrease your score by 1.
 
 The state of food is randomly generated, the probability of each state to appear is: 10% for bonus food, 10% for poisonous food, and 80% for regular food. After the food is determined, the Game::PlaceFood() method and Game::Update() method both are modified to incorporate the foodState. 
+
+## Additional Feature 2
+In the Renderer::Render(), the snake part and the food part are now separated to single functions. And then in the Renderer::Render(), two threads are created to render snake and food separately using std::future and std::asycn.
