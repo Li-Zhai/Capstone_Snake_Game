@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <vector>
+#include <mutex>
 
 #include "SDL.h"
 #include "food.h"
@@ -23,7 +24,7 @@ class Renderer {
    private:
     SDL_Window *sdl_window;
     SDL_Renderer *sdl_renderer;
-
+    mutex _mutex;
     const std::size_t screen_width;
     const std::size_t screen_height;
     const std::size_t grid_width;

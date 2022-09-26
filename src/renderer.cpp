@@ -63,6 +63,7 @@ void Renderer::Render(Snake const snake, unique_ptr<Food> const &food) {
 }
 
 void Renderer::RenderFood(unique_ptr<Food> const &food, SDL_Rect &block) {
+    lock_guard<mutex> lock(_mutex);
     // Render food
     if (food->state == foodState::regular) {
         SDL_SetRenderDrawColor(sdl_renderer, 0xF6, 0xBE, 0x13, 0xFF);
@@ -77,6 +78,7 @@ void Renderer::RenderFood(unique_ptr<Food> const &food, SDL_Rect &block) {
 }
 
 void Renderer::RenderSnake(Snake const snake, SDL_Rect &block) {
+    lock_guard<mutex> lock(_mutex);
     // Render snake's body
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     for (SDL_Point const &point : snake.body) {
