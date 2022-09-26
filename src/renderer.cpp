@@ -53,8 +53,8 @@ void Renderer::Render(Snake const snake, unique_ptr<Food> const &food) {
     // RenderSnake(snake, block);
 
     // !use concurrency to render both snake and food at the same time
-    future<void> ftr_1 = async(&Renderer::RenderFood, food, block);
-    future<void> ftr_2 = async(&Renderer::RenderSnake, snake, block);
+    future<void> ftr_1 = async(launch::async, &Renderer::RenderFood, this, food, block);
+    future<void> ftr_2 = async(launch::async, &Renderer::RenderSnake, this, snake, block);
     ftr_1.wait();
     ftr_2.wait();
 
