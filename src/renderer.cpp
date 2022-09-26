@@ -39,10 +39,6 @@ Renderer::~Renderer() {
 }
 
 void Renderer::Render(Snake const snake, unique_ptr<Food> const &food) {
-    SDL_Rect block;
-    block.w = screen_width / grid_width;
-    block.h = screen_height / grid_height;
-
     // Clear screen
     SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
     SDL_RenderClear(sdl_renderer);
@@ -53,8 +49,8 @@ void Renderer::Render(Snake const snake, unique_ptr<Food> const &food) {
     // RenderSnake(snake, block);
 
     // !use concurrency to render both snake and food at the same time
-    future<void> ftr_1 = async(launch::async, &Renderer::RenderFood, this, food, block);
-    future<void> ftr_2 = async(launch::async, &Renderer::RenderSnake, this, snake, block);
+    future<void> ftr_1 = async(launch::async, &Renderer::RenderFood, this, food);
+    future<void> ftr_2 = async(launch::async, &Renderer::RenderSnake, this, snake);
     ftr_1.wait();
     ftr_2.wait();
 
@@ -64,6 +60,9 @@ void Renderer::Render(Snake const snake, unique_ptr<Food> const &food) {
 
 void Renderer::RenderFood(unique_ptr<Food> const &food, SDL_Rect &block) {
     lock_guard<mutex> lock(_mutex);
+    SDL_Rect block;
+    block.w = screen_width / grid_width;
+    block.h = screen_height / grid_height;
     // Render food
     if (food->state == foodState::regular) {
         SDL_SetRenderDrawColor(sdl_renderer, 0xF6, 0xBE, 0x13, 0xFF);
@@ -79,6 +78,9 @@ void Renderer::RenderFood(unique_ptr<Food> const &food, SDL_Rect &block) {
 
 void Renderer::RenderSnake(Snake const snake, SDL_Rect &block) {
     lock_guard<mutex> lock(_mutex);
+    SDL_Rect block;
+    block.w = screen_width / grid_width;
+    block.h = screen_height / grid_height;
     // Render snake's body
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     for (SDL_Point const &point : snake.body) {
