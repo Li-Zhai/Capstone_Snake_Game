@@ -3,6 +3,7 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <future>
 
 #include "food.h"
 
@@ -46,11 +47,16 @@ void Renderer::Render(Snake const snake, unique_ptr<Food> const &food) {
     SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
     SDL_RenderClear(sdl_renderer);
 
-    // Render food
-    RenderFood(food, block);
+    // // Render food
+    // RenderFood(food, block);
+    // // Render snakes
+    // RenderSnake(snake, block);
 
-    // Render snakes
-    RenderSnake(snake, block);
+    // !use concurrency to render both snake and food at the same time
+    future<void> ftr_1 = async(&Renderer::RenderFood, food, block);
+    future<void> ftr_2 = async(&Renderer::RenderSnake, snake, block);
+    ftr_1.wait();
+    ftr_2.wait();
 
     // Update Screen
     SDL_RenderPresent(sdl_renderer);
