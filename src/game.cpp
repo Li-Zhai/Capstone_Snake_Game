@@ -59,7 +59,7 @@ void Game::PlaceFood() {
         tmp_rand = random_type(engine);
         // !bonus food and poison food appear at 10% probability
         if (tmp_rand % 10 == 0) {
-            type = foodState::bonus
+            type = foodState::bonus;
         } else if (tmp_rand % 10 == 1) {
             type = foodState::poison;
         } else {
