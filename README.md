@@ -7,9 +7,8 @@
    - Linux: make is installed by default on most Linux distros
    - Mac: install Xcode command line tools to get make
    - Windows: Click here for installation instructions
- - SDL2 >= 2.0
-
-  >Note that for Linux, an apt or apt-get installation is preferred to building from source.
+ - SDL2 >= 2.0\
+    >Note that for Linux, an apt or apt-get installation is preferred to building from source.
 
  - gcc/g++ >= 5.4
    - Linux: gcc / g++ is installed by default on most Linux distros
